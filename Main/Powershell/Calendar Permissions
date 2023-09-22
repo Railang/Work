@@ -1,0 +1,35 @@
+#   This is for getting, adding and setting calendar permissions for users through Powershell in O365. These are the commonly used commands by Ian.
+
+#   Get Calendar permissions for each user
+foreach($user in Get-Mailbox -RecipientTypeDetails UserMailbox) {Set-MailboxFolderPermission -Identity ($user.alias+':\calendar') -User Default -AccessRights LimitedDetails}
+
+#   Get Calendar permissions for a speicifc user
+Get-MailboxFolderPermission -Identity User1@mail.com:\calendar
+
+#   Get Spelling for the user's calendar (if their language is different than english)
+get-mailboxfolderstatistics -identity user@domain.com | ft folderpath , folderandsub*
+
+#   Add User2 to User1's calendar permissions exceptions
+Add-MailboxFolderPermission -Identity user1@mail.com:\calendar -User user2@mail.com -AccessRights LimitedDetails
+
+#   Set User2's permissions on User1's calendar permissions exceptions
+Set-MailboxFolderPermission -Identity user1@mail.com:\calendar -User user2@mail.com -AccessRights LimitedDetails
+
+#   Remove User2's permissions on User1's calendar permissions exceptions
+Remove-MailboxFolderPermission -Identity user1@mail.com:\calendar -User user2@mail.com
+
+#   Set Calendar permissions default for a specific user
+Set-MailboxFolderPermission -Identity User1@mail.com:\calendar -User Default -AccessRights LimitedDetails
+
+#   Available Calendar Permissions
+#   Owner.  Allows read, create, modify and delete all items and folders. Also allows manage items permissions
+#   PublishingEditor.  Allows read, create, modify and delete items/subfolders.
+#   Editor.  Allows read, create, modify and delete items.
+#   PublishingAuthor.  Allows read, create all items/subfolders. You can modify and delete only items you create.
+#   Author.  Allows create and read items; edit and delete own items.
+#   NonEditingAuthor.  Allows full read access and create items. You can delete only your own items.
+#   Reviewer.  Read only.
+#   Contributor.  Allows create items and folders.
+#   AvailabilityOnly.  Allows read free/busy information from calendar
+#   LimitedDetails.  Allows view of the subject and location.
+#   None.  No permissions to access folder and files
