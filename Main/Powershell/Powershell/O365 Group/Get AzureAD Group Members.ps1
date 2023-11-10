@@ -1,0 +1,2 @@
+Connect-AzureAD
+Get-AzureADGroupMember -ObjectId 636c65e7-8309-407f-8b73-a1ce91bf552a -All $true | Select-Object -Property UserPrincipalName | Export-CSV "C:\Main\AzureADGroupMembers.csv" -NoTypeInformation -Encoding UTF8

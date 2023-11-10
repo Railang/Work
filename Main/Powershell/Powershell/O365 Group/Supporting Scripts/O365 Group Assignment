@@ -1,0 +1,13 @@
+#Assign User/Users,
+Add-UnifiedGroupLinks -Identity "corp-marketing-revops@alianza.com" -LinkType "Members" -Links "ian.neil@alianza.com"
+Add-UnifiedGroupLinks -Identity "corp-marketing-revops@alianza.com" -LinkType "Owners" -Links "ian.neil@alianza.com"
+
+#PowerShell to Import Members to office 365 group from CSV (GroupID|Member = SMTP)
+Import-CSV "C:\Temp\Scripting\GroupMembers.csv" | ForEach-Object {
+    Add-UnifiedGroupLinks -Identity $_.GroupID -LinkType Members -Links $_.Member
+    Write-host -f Green "Added Member '$($_.Member)' to Office 365 Group '$($_.GroupID)'"
+}
+
+#Remove Users
+Remove-UnifiedGrouplinks -Identity "corp-marketing-revops@alianza.com" -LinkType "Owners" -Links "Ian.Neil@alianza.com"
+Remove-UnifiedGrouplinks -Identity "corp-marketing-revops@alianza.com" -LinkType "Members" -Links "Ian.Neil@alianza.com"

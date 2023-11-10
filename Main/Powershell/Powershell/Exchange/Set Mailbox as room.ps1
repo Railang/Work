@@ -1,0 +1,1 @@
+Set-Mailbox name@alianza.com -Type Room

@@ -1,0 +1,9 @@
+#Parameters
+$GroupName = "corp-marketing-revops"
+$UserUPN = "noah.commenator@alianza.com"
+#Connect
+Connect-AzureAD
+#Get the Azure AD User
+$AADUser  = Get-AzureADUser -Filter "UserPrincipalName eq '$UserUPN'"
+#Add Group Owner
+Add-AzureADGroupOwner -ObjectId (Get-AzureADGroup -SearchString $GroupName).ObjectId -RefObjectId $AADUser.ObjectId
